@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-    var Article = sequelize.define('Article', {
+    var Article = sequelize.define('article', {
         id: {
             type:DataTypes.UUID,
             primaryKey: true,
