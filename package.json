@@ -1,0 +1,26 @@
+{
+  "name": "febe",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davzer27/febe.git"
+  },
+  "author": "David Zerah and Edward Giamphy",
+  "license": "ECL",
+  "bugs": {
+    "url": "https://github.com/davzer27/febe/issues"
+  },
+  "homepage": "https://github.com/davzer27/febe#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "ejs": "^2.5.7",
+    "express": "^4.16.2",
+    "mongodb": "^2.2.33"
+  }
+}

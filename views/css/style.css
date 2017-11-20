@@ -1,0 +1,11 @@
+#loading {
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    width: 100px; 
+    height: 100px;
+    z-index: 2000;
+    background-image: url('/img/loading.gif');
+    background-color: transparent;
+    display:none;
+}
