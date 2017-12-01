@@ -13,10 +13,7 @@ module.exports = function(app, config) {
   app.use(bodyParser.urlencoded({
     extended: true
   }));
-  app.use('/', express.static(__dirname + "/views/"));
-  app.set('views', __dirname + '/views');
-  app.engine('html', require('ejs').renderFile);
-  app.set('view engine', 'ejs');
+
 
  app.use(cors());
 

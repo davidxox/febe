@@ -18,6 +18,11 @@ db.sequelize.sync()
   .catch(function (e) {
       throw new Error(e);
   });
+  app.use('/', express.static(__dirname + "/views/"));
+  app.set('views', __dirname + '/views');
+  app.engine('html', require('ejs').renderFile);
+  app.set('view engine', 'ejs');
+
 // Render a template folder : "views"
 // We are gonna put the HTML file  
 
