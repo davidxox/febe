@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <title>Devoir Final Front-End/Back-End </title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- BOOTSTRAP AND JQUERY LIBRARY -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="js/functions.js"></script>
+</head>
+<body>
+  <div id="loading"></div>
+  <header>
+      <nav class="navbar navbar-inverse">
+            <div class="dropdown">
+                <button class="btn btn-danger navbar-btn" type="button" data-toggle="dropdown">Articles
+                <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <li data-id="null"><a href="#" id="add_new_article">Ajouter un article</a></li>
+                    <div class="divider"></div>
+                </ul>
+              </div>
+        </nav>    
+  </header>
+  <div class="jumbotron text-center">
+    <h1 id="title_article">Les Articles</h1>
+    <p id="welcome_message">Veuillez choisir un article dans le menu déroulant.</p> 
+
+  </div>
+  <div class="align-center">
+    <button type="button" class="btn btn-info" id="editp" disabled="disabled" style="display:none;">Appuyer sur ESC pour quitter le mode édition</button>
+  </div>
+  <div class="container" id="paragraphes">         
+  </div>
+  
+<!-- MODAL TO ADD A NEW ARTICLE -->
+<div id="new_article_modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+  
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close"  data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Ajout d'un nouvel article</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="inputArticle">Nom de l'article</label>
+            <input type="text" class="form-control" id="inputArticle" placeholder="Entrer le nom de l'article">
+            <small id="help" class="form-text text-muted">Cet article est confidentiel et restera interne à l'Ecole Centrale de Lille.</small>
+          </div>
+
+          <div class="align-center">
+            <button type="button" class="btn btn-success" id="ajouterArticle">Ajouter</button>            
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Fermer</button>
+        </div>
+      </div>
+  
+    </div>
+  </div>
+
+  <div id="del_paragraphe_modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+  
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close"  data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Suppression d'un paragraphe</h4>
+        </div>
+        <div class="modal-body">
+          Le paragraphe a correctement été supprimé
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Fermer</button>
+        </div>
+      </div>
+  
+    </div>
+  </div>  
+
+  <script id="getAllArticles">
+  
+  // API DOC : 
+
+/*
+	Method : GET
+	Body : null
+	Query : null
+	Route : base_url/server.php?action=getarticle
+  Réponse de l'API : 
+    JSON comportant les articles et les ids
+    id,
+    titre
+  Exemple de réponse : 
+    [{
+      id: 1,
+      titre : Article 1
+    },
+    {
+      id:2,
+      titre: Article 2
+    }]
+
+*/
+      $('#loading').show(); // To wait the user
+      $.getJSON(
+        "server.php", 
+        {	"action" : "getarticle" }, 
+            function (articles) {
+        $('#loading').hide(); // Time to hide this
+              var response_correct_format = '';
+                for (let i = 0; i < articles.length; i++) {
+                  response_correct_format+='<li data-id="'+articles[i].id+'"><a href="#">'+articles[i].titre+'</a></li>';
+                }
+              $('.dropdown-menu').append(response_correct_format);  
+        });
+
+  </script>
+  <script id="manage_article">
+  //******* ADD A NEW ARTICLE *** //
+
+      $('#add_new_article').click(function() {
+        $('#new_article_modal').modal();
+      });
+
+  // *** END ADD A NEW ARTICLE ** //
+
+
+  // **** GET ARTICLE *** //
+
+  $(document).on('click','.dropdown-menu > li', function() {
+    replaceNameInTheDom($(this).attr('data-id'), $(this).children().html());
+  })
+
+  // ** END GET ARTICLE **/
+  
+  </script>
+  <script id="draggable">
+  
+  draggable('paragraphes');
+  </script>
+  <script id="edit_paragraphe">
+  
+  $(document).on('click','#editp', function(){ 
+    transformPToInputAndInputToP("ptoinput");
+    $(this).html('Appuyer sur ESC pour quitter le mode édition');
+    $(this).attr('disabled', 'disabled');
+
+  }) 
+  $(document).on('click', '.info_paragraphe > p', function() {
+        $('#editp').show();
+        transformPToInputAndInputToP("ptoinput", $(this).parent());
+  })
+
+
+  $("body").keydown(function(event) { 
+    if(event.which == 27) {
+      $('#editp').hide();
+      transformPToInputAndInputToP("inputtop");
+      $('#newp').hide();   
+    }
+  })
+
+  $(document).on('keyup', '#textarea-content', function(e) {
+    if(event.which == 13) {
+        validateModify($(this));
+    }
+  })
+  </script>
+  <script id="addANewP">
+addANewParagraphe();  
+  </script>
+  <script id="deleteP">
+  
+  $(document).on('mouseover', '.info_paragraphe_first', function() {
+      $(this).find("button").show();
+  })
+  $(document).on('mouseout', '.info_paragraphe_first', function() {
+      $(this).find("button").hide();
+  })
+
+  $(document).on('click', '.close', function() {
+/*
+	Method : DELETE (maquillé en GET)
+	Body : null
+	Query : id -> id du paragraphe à supprimer
+	Route : base_url/server.php?action=delparagraphe
+  Réponse de l'API : 
+    success -> true ou false
+  Exemple de réponse : 
+    [{
+      success : true
+    }]
+*/
+    var object = $(this);
+    $('#loading').show(); // To wait the user
+      $.getJSON(
+        "server.php", 
+        {	"action" : "delparagraphe",
+          "id" : object.attr('data-id') }, 
+            function (response) {
+        $('#loading').hide(); // Time to hide this
+        object.parent().remove();
+        $('#del_paragraphe_modal').modal();  
+        })
+
+  })
+
+  </script>
+  <script id="addANewArticle">
+/*
+	Method : POST (maquillé en GET)
+	Body : null
+	Query : titre -> titre de l'article
+	Route : base_url/server.php?action=addarticle
+  Réponse de l'API : 
+    id, -> id de l'article crée
+    success -> true ou false
+  Exemple de réponse : 
+    [{
+      id: 18,
+      success : true
+    }]
+*/
+    
+  $('#ajouterArticle').click(function() {
+    var title_Article = $('#inputArticle');
+      if(!title_Article.val()) { // Warning !
+        title_Article.css('border', '1px solid red');
+      } else {
+        $('#loading').show();       
+        $.getJSON(
+        "server.php", 
+        {	"action" : "addarticle",
+          "titre" : title_Article.val() }, 
+            function (response) { 
+                $('#loading').hide(); 
+                if(response.success) {
+                $('.dropdown-menu').append('<li data-id="'+response.id+'"><a href="#">'+title_Article.val()+'</a></li>');
+                $('#new_article_modal').modal('hide');
+                }
+            })
+      }
+  })
+  </script>
+</body>
+</html>

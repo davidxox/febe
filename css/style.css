@@ -1,0 +1,44 @@
+#loading {
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    width: 100px; 
+    height: 100px;
+    z-index: 2000;
+    background-image: url('../img/loading.gif');
+    background-color: transparent;
+    display:none;
+}
+
+.info_paragraphe {
+    background-color:#F2F2F2;
+    padding:15px;
+    padding-top:25px;
+    margin:5px;
+    border: 1px solid #FA5858;
+    border-radius:5px;
+}
+
+.title_paragraphe {
+    padding-left:5px;
+}
+
+.align-center {
+    text-align:center;
+}
+
+.newp {
+    margin-left:35%;
+    width:30%;
+}
+
+.position-close {
+    position:absolute;
+    top:0px;
+    left:10px;
+    display:none;
+}
+
+.info_paragraphe_first {
+    position: relative;
+}

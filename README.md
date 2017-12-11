@@ -1,14 +1,15 @@
 # Devoir final front end / back end
 
-API réalisée en NODE.JS avec le framework express et la base de donnée MongoDB.
+API réalisée en PHP/MySQL 
 
 ## Getting Started
 
-Tout d'abord faire npm install pour récupérer les dépendences et ensuite faire node server.js pour lancer le serveur
+Tout d'abord configurer le fichier config.php ave les identifiants de la base de donnée.
+Puis charger le fichier sql.sql dans phpMyAdmin
 
 ## Documentation
 
-base_url: localhost:8080
+base_url: localhost:8888
 
 Pour le formatage du body nous utilisons x-www-form-urlencoded
 
