@@ -27,7 +27,7 @@ if (isset($_GET["action"]))
 
 		case "addarticle" : 
 
-	if (isset($_GET["titre"])) $titre = $_GET["titre"]; 
+	if (isset($_GET["titre"])) $titre = htmlspecialchars($_GET["titre"]); // Avoid some hack
 
 	if ($titre) 			
 	{
@@ -41,7 +41,7 @@ if (isset($_GET["action"]))
 
 	case "addparagraphe" : 
 	
-		if (isset($_GET["contenu"])) $contenu = $_GET["contenu"]; 
+		if (isset($_GET["contenu"])) $contenu = htmlspecialchars($_GET["contenu"]); 
 		if (isset($_GET["id_article"])) $id_article = $_GET["id_article"]; 
 		if ($contenu && $id_article) 			
 		{
@@ -67,7 +67,7 @@ if (isset($_GET["action"]))
 	break;
 
 	case "upparagraphe" : 
-	if (isset($_GET["contenu"])) $contenu = $_GET["contenu"]; 
+	if (isset($_GET["contenu"])) $contenu = htmlspecialchars($_GET["contenu"]); 
 	if (isset($_GET["id"])) $id = $_GET["id"];
 
 	if ($id && $contenu) {
