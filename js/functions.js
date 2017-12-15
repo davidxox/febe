@@ -61,6 +61,11 @@ function replaceNameInTheDom(id, title=null) {
     }
 }
 function draggable(id) {
+  // This function is about the draggable thing
+  // Detech when it's draggable, set the id of all paragraph in a json (with an order)
+  // The order is a number that is increment 
+  // It puts this artificial order into the json with the id
+  // Useless thing : id of the article
 $( function() {
   $( "#"+id).sortable({
     axis: 'y',
@@ -92,6 +97,9 @@ $( function() {
       success : true
     }]
 */
+
+    // For each paragraph, update every order
+    // Not so cool :( 
       $('#loading').show();
       $.getJSON(
         "server.php", 
@@ -114,6 +122,9 @@ $( function() {
 
 
 function transformPToInputAndInputToP(action, object=null) {
+
+  // This function is about to transform textarea to p
+  // And p to textarea
   if(action == "ptoinput" && object != null) {
       object.html('<textarea id="textarea-content" class="form-control" rows="5" data-id="'+object.children().attr('data-id')+'" data-aid="'+object.attr('data-aid')+'" data-content="'+object.children().attr('data-content')+'">'+object.children().attr('data-content')+'</textarea>');
   } else {
@@ -125,6 +136,7 @@ function transformPToInputAndInputToP(action, object=null) {
 }
 
 function validateModify(object) {
+  // This function launches the modification (by pushing enter) of a paragraph (only the content)
   $('#editp').hide();
   $('#newp').hide(); 
 /*
@@ -154,6 +166,7 @@ $.getJSON(
 }
 
 function addANewParagraphe() {
+  // This function just add a new paragraph to an article
   $(document).on('click', '#addnewp', function() {
 
       var text = 'Nouveau paragraphe';

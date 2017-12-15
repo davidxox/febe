@@ -89,7 +89,7 @@
   </div>  
 
   <script id="getAllArticles">
-  
+      // This script get all articles and put it in the menu
   // API DOC : 
 
 /*
@@ -127,7 +127,7 @@
 
   </script>
   <script id="manage_article">
-  //******* ADD A NEW ARTICLE *** //
+  //******* ADD A NEW ARTICLE : LAUNCH A MODAL IN ORDER TO ADD A NEW ARTICLE *** //
 
       $('#add_new_article').click(function() {
         $('#new_article_modal').modal();
@@ -136,7 +136,7 @@
   // *** END ADD A NEW ARTICLE ** //
 
 
-  // **** GET ARTICLE *** //
+  // **** GET ARTICLE : REPLACE IN THE DOM THE CONCERNED ARTICLE *** //
 
   $(document).on('click','.dropdown-menu > li', function() {
     replaceNameInTheDom($(this).attr('data-id'), $(this).children().html());
@@ -146,11 +146,11 @@
   
   </script>
   <script id="draggable">
-  
+  // Launch the script for draggable
   draggable('paragraphes');
   </script>
   <script id="edit_paragraphe">
-  
+  // Launch the editable paragraphe
   $(document).on('click','#editp', function(){ 
     transformPToInputAndInputToP("ptoinput");
     $(this).html('Appuyer sur ESC pour quitter le mode édition');
@@ -162,7 +162,7 @@
         transformPToInputAndInputToP("ptoinput", $(this).parent());
   })
 
-
+// Cancel the modification
   $("body").keydown(function(event) { 
     if(event.which == 27) {
       $('#editp').hide();
@@ -171,6 +171,7 @@
     }
   })
 
+  // Validate the modification paragraph
   $(document).on('keyup', '#textarea-content', function(e) {
     if(event.which == 13) {
         validateModify($(this));
@@ -178,17 +179,18 @@
   })
   </script>
   <script id="addANewP">
+    // Launch to add a new paragraphe
 addANewParagraphe();  
   </script>
   <script id="deleteP">
-  
+  // Launch to delete a paragraphe with a special icon (mouseover, mouseout)
   $(document).on('mouseover', '.info_paragraphe_first', function() {
       $(this).find("button").show();
   })
   $(document).on('mouseout', '.info_paragraphe_first', function() {
       $(this).find("button").hide();
   })
-
+  // And launch the request
   $(document).on('click', '.close', function() {
 /*
 	Method : DELETE (maquillé en GET)
@@ -232,10 +234,10 @@ addANewParagraphe();
       success : true
     }]
 */
-    
+    // Click to add a new article
   $('#ajouterArticle').click(function() {
     var title_Article = $('#inputArticle');
-      if(!title_Article.val()) { // Warning !
+      if(!title_Article.val()) { // Warning ! if empty value
         title_Article.css('border', '1px solid red');
       } else {
         $('#loading').show();       
