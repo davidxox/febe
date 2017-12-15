@@ -45,8 +45,12 @@ if (isset($_GET["action"]))
 		if (isset($_GET["id_article"])) $id_article = $_GET["id_article"]; 
 		if ($contenu && $id_article) 			
 		{
+			// Which Order ?? Max(order + 1)
+			$SQL_max = "SELECT MAX(ordre) AS 'max' FROM paragraphes WHERE id_article='".$id_article."'"; 
+			$res_max = parcoursRs(SQLSelect($SQL_max));
+			$max = $res_max[0]['max'] + 1;
 			
-			$SQL = "INSERT INTO paragraphes (ordre, contenu, id_article) VALUES ('1','".$contenu."', '".$id_article."')"; 
+			$SQL = "INSERT INTO paragraphes (ordre, contenu, id_article) VALUES ('".$max."','".$contenu."', '".$id_article."')"; 
 			$nextId = SQLInsert($SQL);
 			$data["success"] = true; 
 			$data["id"] = $nextId; 
@@ -56,7 +60,7 @@ if (isset($_GET["action"]))
 	case "delparagraphe" : 
 	if (isset($_GET["id"])) $id = $_GET["id"];
 	if ($id) {
-		$SQL = "DELETE FROM paragraphes WHERE id='$id'";
+		$SQL = "DELETE FROM paragraphes WHERE id='".$id."'";
 		SQLUpdate($SQL);
 		$data["success"] = true; 
 	}	
@@ -67,12 +71,24 @@ if (isset($_GET["action"]))
 	if (isset($_GET["id"])) $id = $_GET["id"];
 
 	if ($id && $contenu) {
-		$SQL = "UPDATE paragraphes SET contenu='$contenu' WHERE id='$id'";
+		$SQL = "UPDATE paragraphes SET contenu='".$contenu."' WHERE id='".$id."'";
 		SQLUpdate($SQL);
 		$data["success"] = true;
 	}
 
 	break;
+
+	case "upordrep" : 
+	if (isset($_GET["id"])) $id = $_GET["id"];
+	if (isset($_GET["ordre"])) $ordre = $_GET["ordre"];
+
+	if ($id && $ordre) {
+		$SQL = "UPDATE paragraphes SET ordre='".$ordre."' WHERE id='".$id."'";
+		SQLUpdate($SQL);
+		$data["success"] = true;
+	}
+
+	break;	
 
 	}
 }

@@ -66,9 +66,44 @@ $( function() {
     axis: 'y',
     update: function(event, ui) {
       var json_sort = [];
+        var ordre = 1;
       $(".info_paragraphe").each(function() {
-        json_sort.push($(this).attr('data-id'));
+        var temp = {};
+        temp["id_article"] = $(this).attr('data-aid');
+        temp["id"] = $(this).attr('data-id')
+        temp["ordre"] = ordre;
+        json_sort.push(temp);
+        ordre++;
       })
+      // Lets update the order now !
+        for (let i = 0; i < json_sort.length; i++) {
+
+/*
+	Method : PUT (maquillé en GET)
+	Body : null
+  Query : 
+  id -> id du paragraphe à modifier
+  ordre -> nouveau ordre
+	Route : base_url/server.php?action=upordrep
+  Réponse de l'API : 
+    success -> true ou false
+  Exemple de réponse : 
+    [{
+      success : true
+    }]
+*/
+      $('#loading').show();
+      $.getJSON(
+        "server.php", 
+        {	"action" : "upordrep",
+          "ordre" : json_sort[i].ordre,
+          "id" : json_sort[i].id}, 
+            function (response) {  
+              $('#loading').hide(); 
+              console.log("success");
+            }) 
+
+        }
       console.log(json_sort);
 
     }
@@ -150,7 +185,7 @@ $.getJSON(
   "id_article" : id_article }, 
     function (response) {  
       $('#loading').hide(); 
-     $('#paragraphes').prepend('<div class="info_paragraphe_first" data-id="p1">'+
+     $('#paragraphes').append('<div class="info_paragraphe_first" data-id="p1">'+
       '<button type="button" class="close position-close" data-id="'+response.id+'">&times;</button>'+
         '<div class="info_paragraphe">'+
             '<textarea id="textarea-content" class="form-control" rows="5" data-id="'+response.id+'" data-aid="'+id_article+'" data-content="'+text+'">'+text+'</textarea>'+

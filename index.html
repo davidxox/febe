@@ -248,6 +248,7 @@ addANewParagraphe();
                 if(response.success) {
                 $('.dropdown-menu').append('<li data-id="'+response.id+'"><a href="#">'+title_Article.val()+'</a></li>');
                 $('#new_article_modal').modal('hide');
+                replaceNameInTheDom(response.id, title_Article.val());
                 }
             })
       }
