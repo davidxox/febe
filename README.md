@@ -30,13 +30,6 @@ Réponse : la réponse de la requête
 #### 1.1	Les Articles
 
     Récupération :
-    	Method : GET
-		Body : rien
-		Query : email = "email du client"
-	    	password = "mot de passe du client"
-		Route : base_url/user/authenticate
-		Réponse:id = "id du client"
-	    		token = "le token pour accéder aux autres API"
         Method : GET
         Body : null
         Query : null
